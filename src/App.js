@@ -3,7 +3,10 @@ import { useState, useEffect } from "react";
 import io from "socket.io-client";
 import { nanoid } from "nanoid";
 
-const socket = io.connect("http://localhost:5000");
+const ip = process.env.REACT_APP_IP;
+const port = process.env.REACT_APP_PORT;
+
+const socket = io.connect(`http://${ip}:${port}`);
 const userName = nanoid(4);
 
 function App() {
