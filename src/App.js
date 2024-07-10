@@ -5,7 +5,6 @@ import { nanoid } from "nanoid";
 import axios from "axios";
 
 const ip = process.env.REACT_APP_IP;
-const port = process.env.REACT_APP_PORT;
 
 const socket = io.connect(`${ip}`);
 // const userName = nanoid(4);
@@ -49,7 +48,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <div className="form-container">
-          <h1>Chatty App</h1>
+          <h1>Chat App</h1>
           <form onSubmit={sendChat} className="chat-form">
             <input
               type="text"
