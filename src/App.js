@@ -6,7 +6,7 @@ import { nanoid } from "nanoid";
 const ip = process.env.REACT_APP_IP;
 const port = process.env.REACT_APP_PORT;
 
-const socket = io.connect(`http://${ip}:${port}`);
+const socket = io.connect(`${ip}:${port}`);
 // const userName = nanoid(4);
 
 function App() {
