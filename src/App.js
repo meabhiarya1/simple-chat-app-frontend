@@ -2,6 +2,7 @@ import "./App.css";
 import { useState, useEffect } from "react";
 import io from "socket.io-client";
 import { nanoid } from "nanoid";
+import axios from "axios";
 
 const ip = process.env.REACT_APP_IP;
 const port = process.env.REACT_APP_PORT;
@@ -20,6 +21,18 @@ function App() {
       setChat([...chat, payload]);
     });
   });
+
+  useEffect(() => {
+    const fetchedData = async () => {
+      try {
+        const response = await axios.get(`${ip}/getconnection`);
+        console.log(response);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchedData();
+  }, []);
 
   const sendChat = (e) => {
     e.preventDefault();
