@@ -7,7 +7,7 @@ import axios from "axios";
 const ip = process.env.REACT_APP_IP;
 const port = process.env.REACT_APP_PORT;
 
-const socket = io.connect(`${ip}:${port}`);
+const socket = io.connect(`${ip}`);
 // const userName = nanoid(4);
 
 function App() {
