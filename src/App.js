@@ -7,11 +7,13 @@ const ip = process.env.REACT_APP_IP;
 const port = process.env.REACT_APP_PORT;
 
 const socket = io.connect(`http://${ip}:${port}`);
-const userName = nanoid(4);
+// const userName = nanoid(4);
 
 function App() {
   const [message, setMessage] = useState("");
   const [chat, setChat] = useState([]);
+  const [name, setName] = useState("");
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   useEffect(() => {
     socket.on("chat", (payload) => {
@@ -21,8 +23,13 @@ function App() {
 
   const sendChat = (e) => {
     e.preventDefault();
-    socket.emit("chat", { message, userName });
-    setMessage("");
+    if (!isSubmitted && name !== "") {
+      setIsSubmitted(!isSubmitted);
+    }
+    if (message !== "" && name !== "") {
+      socket.emit("chat", { message, name });
+      setMessage("");
+    }
   };
 
   return (
@@ -33,12 +40,18 @@ function App() {
           <form onSubmit={sendChat} className="chat-form">
             <input
               type="text"
+              name="name"
+              placeholder="Type name..."
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              disabled={isSubmitted}
+            />
+            <input
+              type="text"
               name="chat"
               placeholder="Type message..."
               value={message}
-              onChange={(e) => {
-                setMessage(e.target.value);
-              }}
+              onChange={(e) => setMessage(e.target.value)}
             />
             <button type="submit">Send</button>
           </form>
@@ -46,7 +59,7 @@ function App() {
         <div className="chat-container">
           {chat.map((payload, index) => (
             <p key={index} className="chat-message">
-              {payload.userName}: {payload.message}
+              {payload.name}: {payload.message}
             </p>
           ))}
         </div>
